@@ -1,0 +1,15 @@
+{
+  "name": "mypromise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "MyPromise.js",
+  "scripts": {
+    "test": "promises-aplus-tests MyPromise"
+  },
+  "author": "rjm",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.7.0",
+    "promises-aplus-tests": "^2.1.2"
+  }
+}
