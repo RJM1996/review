@@ -1,0 +1,3 @@
+export const ELEMENT_TYPE = {
+  TEXT_ELEMENT: 'TEXT_ELEMENT'
+}

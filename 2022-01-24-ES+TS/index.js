@@ -1,7 +1,7 @@
 // let 的原理: 匿名函数自调用
 const fun = () => {
   for (var i = 0; i < 5; i++) {
-    ;(function (i) {
+    (function (i) {
       setTimeout(() => {
         console.log('var', i)
       })
@@ -29,9 +29,9 @@ const hmm = {
 }
 getSalary.call(ll, 10000, 1000, 2000)
 getSalary.call(hmm, 10000, 1000, 2000)
-getSalary(10000, 1000)
+// getSalary(10000, 1000)
 const getSalary1 = getSalary.bind(ll, 10000)
-getSalary1(1000, 200)
+// getSalary1(1000, 200)
 Function.prototype.bind = function (obj) {
   const fun = this
   const defaultArg = [].slice.call(arguments, 1)
@@ -42,14 +42,36 @@ Function.prototype.bind = function (obj) {
   }
 }
 const getSalary2 = getSalary.bind(hmm, 10000)
-console.log(getSalary2)
-getSalary2(2000, 3000)
+// console.log(getSalary2)
+// getSalary2(2000, 3000)
 
 function fun1() {
   var a = { n: 1 } // a: 0x1234
   var b = a // b: 0x1234
   a.x = a = { n: 2 } // a: 0x2345
-  a.n = 3 
+  a.n = 3
   console.log(a, b)
 }
-fun1()
+// fun1()
+
+function fun2() {
+  var a = { key: 'a' }
+  var b = { key: 'b' }
+  var c = {}
+  c[a] = 123
+  c[b] = 456
+  console.log(c, c[a])
+}
+// fun2()
+
+function fun3() {
+  fun3.a = function () {
+    console.log(this, 1)
+  }
+  this.a = function () {
+    console.log(this, 2)
+  }
+}
+fun3.prototype.a = function () {
+  console.log(this, 3)
+}
