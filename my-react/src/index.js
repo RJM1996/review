@@ -2,11 +2,29 @@ import MyReact from './MyReact.js'
 import MyReactDom from './MyReactDom.js'
 
 /** @jsx MyReact.createElement */
-const element = (
-  <div style='background: salmon'>
-    <h1>Hello World</h1>
-    <h2 style='text-align:right'>from MyReact</h2>
-  </div>
-)
 const container = document.getElementById('root')
-MyReactDom.render(element, container)
+const onInputChange = (e) => {
+  console.log('onInput', e.target.value)
+  rerender(e.target.value)
+}
+// const App = (props) => {
+//   return <h1>Hi, {props.name}</h1>
+// }
+const App = (props) => {
+  return MyReact.createElement('h1', null, 'Hi', props.name)
+}
+const AppElement = MyReact.createElement(App, { name: '函数式组件' })
+MyReactDom.render(AppElement, container)
+
+const rerender = (value) => {
+  const element = (
+    <div style='background: salmon'>
+      <h1>{value}</h1>
+      <input onInput={onInputChange} value={value} />
+      {/* <App name='函数式组件' /> */}
+      <h2 style='text-align:right'>from MyReact</h2>
+    </div>
+  )
+  // MyReactDom.render(element, container)
+}
+rerender('Hello World')
