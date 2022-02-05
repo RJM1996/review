@@ -42,6 +42,9 @@ let currentRoot = null
 // 记录已删除节点的数组
 let deletions = []
 
+let wipFiber = null
+let hookIndex = null
+
 function workLoop(deadline) {
   let shouldYield = false
   while (nextUnitOfWork && !shouldYield) {
@@ -65,7 +68,11 @@ function commitRoot() {
 // 递归更新当前节点,子节点,兄弟节点到真实的 dom 中
 function commitWork(fiber) {
   if (!fiber) return
-  const parentDom = fiber.parent.dom
+  let domParentFiber = fiber.parent
+  while (!domParentFiber.dom) {
+    domParentFiber = domParentFiber.parent
+  }
+  const parentDom = domParentFiber.dom
 
   // 根据 effectTag 属性进行相应操作(更新/新增/删除)
   if (fiber.effectTag === EFFECT_TAG.PLACEMENT && fiber.dom !== null) {
@@ -75,10 +82,18 @@ function commitWork(fiber) {
     updateDom(fiber.dom, fiber.alternate.props, fiber.props)
   }
   if (fiber.effectTag === EFFECT_TAG.DELETION) {
-    parentDom.removeChild(fiber.dom)
+    // parentDom.removeChild(fiber.dom)
+    commitDeletion(fiber, parentDom)
   }
   commitWork(fiber.child)
   commitWork(fiber.sibling)
+}
+function commitDeletion(fiber, domParent) {
+  if (fiber.dom) {
+    domParent.removeChild(fiber.dom)
+  } else {
+    commitDeletion(fiber.child, domParent)
+  }
 }
 function updateDom(dom, prevProps, nextProps) {
   // 定义用于判断属性类型的一系列方法
@@ -120,6 +135,9 @@ function updateDom(dom, prevProps, nextProps) {
     })
 }
 function updateFunComponent(fiber) {
+  wipFiber = fiber
+  hookIndex = 0
+  wipFiber.hooks = []
   // 执行函数获取函数式组件的子节点
   const children = [fiber.type(fiber.props)]
   reconcileChildren(fiber, children)
@@ -211,4 +229,31 @@ function reconcileChildren(wipFiber, elements) {
     prevSibling = newFiber
     index++
   }
+}
+
+// Hooks
+export const useState = function (initValue) {
+  const oldHook =
+    wipFiber.alternate && wipFiber.alternate.hooks && wipFiber.alternate.hooks[hookIndex]
+  const hook = {
+    state: oldHook ? oldHook.state : initValue,
+    queue: []
+  }
+  const actions = oldHook ? oldHook.queue : []
+  actions.forEach((action) => {
+    hook.state = action(hook.state)
+  })
+  const setState = function (action) {
+    hook.queue.push(action)
+    wipRoot = {
+      dom: currentRoot.dom,
+      props: currentRoot.props,
+      alternate: currentRoot
+    }
+    nextUnitOfWork = wipRoot
+    deletions = []
+  }
+  wipFiber.hooks.push(hook)
+  hookIndex++
+  return [hook.state, setState]
 }
