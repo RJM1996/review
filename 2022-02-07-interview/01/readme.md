@@ -1,4 +1,4 @@
-JavaScript 判断数据类型的方式共有四种
+# JavaScript 判断数据类型的方式共有四种
 
 - typeof
 - instanceof
@@ -77,7 +77,9 @@ function _instanceof() {
 }
 _instanceof()
 ```
+
 `instanceof` 的缺点
+>
 > 1. 不能判断基本数据类型,因为基本数据类型不是构造函数的实例,没有原型链
 > 2. 引用数据类型的原型链上都会存在 object.prototype, 所以引用数据类型的 instanceof Object 都为 true
 > 3. 原型链可以修改, 结果可能不准确
@@ -118,16 +120,19 @@ function _constructor () {
 _constructor()
 ```
 
-`constructor` 可以判断目标值是否为指定构造函数的实例, 可以判断除了 `null` 和 `undefined` 以外的所有数据类型; 因为 `null` 和 `undefined` 是在 js 运行环境创建之初就已经存在的数据类型,没有构造函数.
-为什么基本数据类型也有 `constructor` 属性呢?
+`constructor` 可以判断目标值是否为指定构造函数的实例, 可以判断除了 `null` 和 `undefined` 以外的所有数据类型; 因为 `null` 和 `undefined` 是在 js 运行环境创建之初就已经存在的数据类型,没有构造函数.   
+为什么基本数据类型也有 `constructor` 属性呢?    
+
 > 因为在基本数据类型获取 `constructor` 属性的时候, js 会自动将基本数据类型的值转为包装对象实例, 并在使用后立即销毁
 
 缺点: constructor 属性可以被修改, 结果可能不准确
 
 
+
 ## Object.prototype.toString
 
 可以返回 `对象的类型字符串`, 能够准确判断所有数据类型
+
 ```js
 function _toString () {
   // '[object Number]'
@@ -157,7 +162,3 @@ function _toString () {
 }
 _toString()
 ```
-
-
-
-
