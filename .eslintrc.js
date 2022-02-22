@@ -12,6 +12,7 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
-    'no-unused-vars': 1
+    'no-unused-vars': 1,
+    'no-console': 0
   }
 }

@@ -30,7 +30,7 @@ const rerender = (value) => {
 // rerender('Hello World')
 
 /** @jsx MyReact.createElement */
-function Counter() {
+function Counter () {
   const [state, setState] = useState(1)
   return (
     <div>

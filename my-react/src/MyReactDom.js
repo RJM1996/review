@@ -4,11 +4,8 @@ import { EFFECT_TAG, ELEMENT_TYPE } from './types.js'
  * MyReactDom
  */
 export default class MyReactDom {
-  constructor() {}
-  static render(element, container) {
-    // element.props.children.forEach((child) => MyReactDom.render(child, dom))
-    // container.appendChild(dom)
-
+  constructor() { }
+  static render (element, container) {
     wipRoot = {
       dom: container,
       props: {
@@ -19,11 +16,12 @@ export default class MyReactDom {
     deletions = []
     nextUnitOfWork = wipRoot
     // https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestIdleCallback
+    // 回调函数将在浏览器空闲时期被调用。这使开发者能够在主事件循环上执行后台和低优先级工作，而不会影响延迟关键事件
     requestIdleCallback((deadline) => workLoop(deadline))
   }
 }
 
-function createDom(fiber) {
+function createDom (fiber) {
   const dom =
     fiber.type === ELEMENT_TYPE.TEXT_ELEMENT
       ? document.createTextNode('')
@@ -45,7 +43,7 @@ let deletions = []
 let wipFiber = null
 let hookIndex = null
 
-function workLoop(deadline) {
+function workLoop (deadline) {
   let shouldYield = false
   while (nextUnitOfWork && !shouldYield) {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork)
@@ -58,7 +56,7 @@ function workLoop(deadline) {
   requestIdleCallback((deadline) => workLoop(deadline))
 }
 
-function commitRoot() {
+function commitRoot () {
   console.log('commitRoot')
   deletions.forEach(commitWork)
   commitWork(wipRoot.child)
@@ -66,7 +64,7 @@ function commitRoot() {
   wipRoot = null
 }
 // 递归更新当前节点,子节点,兄弟节点到真实的 dom 中
-function commitWork(fiber) {
+function commitWork (fiber) {
   if (!fiber) return
   let domParentFiber = fiber.parent
   while (!domParentFiber.dom) {
@@ -88,14 +86,14 @@ function commitWork(fiber) {
   commitWork(fiber.child)
   commitWork(fiber.sibling)
 }
-function commitDeletion(fiber, domParent) {
+function commitDeletion (fiber, domParent) {
   if (fiber.dom) {
     domParent.removeChild(fiber.dom)
   } else {
     commitDeletion(fiber.child, domParent)
   }
 }
-function updateDom(dom, prevProps, nextProps) {
+function updateDom (dom, prevProps, nextProps) {
   // 定义用于判断属性类型的一系列方法
   // 是否为事件监听属性 (react 中的事件属性都以 on 开头)
   const isEvent = (key) => key.startsWith('on')
@@ -106,6 +104,7 @@ function updateDom(dom, prevProps, nextProps) {
   // 是否为移除属性
   const isGone = (prev, next) => (key) => !(key in next)
 
+  // 处理事件属性
   // 过滤出老节点上的事件监听属性,然后再次过滤出在新节点上不存在或者在新旧节点上属性值不同的属性,将其移除
   Object.keys(prevProps)
     .filter(isEvent)
@@ -117,7 +116,7 @@ function updateDom(dom, prevProps, nextProps) {
       dom.removeEventListener(eventType, prevProps[name])
     })
 
-  // 过滤出新节点上的原始属性,并再次过滤出新旧节点上属性值不同的属性,添加到dom中
+  // 过滤出新节点上的原始属性,并再次过滤出新旧节点上属性值不同的属性,更新为新的属性值
   Object.keys(nextProps)
     .filter(isProperty)
     .filter(isNew(prevProps, nextProps))
@@ -134,7 +133,7 @@ function updateDom(dom, prevProps, nextProps) {
       dom.addEventListener(eventType, nextProps[name])
     })
 }
-function updateFunComponent(fiber) {
+function updateFunComponent (fiber) {
   wipFiber = fiber
   hookIndex = 0
   wipFiber.hooks = []
@@ -142,7 +141,7 @@ function updateFunComponent(fiber) {
   const children = [fiber.type(fiber.props)]
   reconcileChildren(fiber, children)
 }
-function updateHostComponent(fiber) {
+function updateHostComponent (fiber) {
   // 1. 根据 fiber 节点创建真实的 dom 节点, 并将 fiber 的 dom 属性指向真实的 dom 节点对象
   if (!fiber.dom) {
     fiber.dom = createDom(fiber)
@@ -152,9 +151,8 @@ function updateHostComponent(fiber) {
   reconcileChildren(fiber, elements)
 }
 // 执行工作单元
-function performUnitOfWork(fiber) {
+function performUnitOfWork (fiber) {
   // console.log('fiber', fiber)
-
   // 函数式组件和类组件有不同的更新逻辑
   const isFunComponent = fiber.type instanceof Function
   if (isFunComponent) {
@@ -176,7 +174,7 @@ function performUnitOfWork(fiber) {
 }
 
 // 调和(对比前后 fiber 树结构的不同, 更新节点)
-function reconcileChildren(wipFiber, elements) {
+function reconcileChildren (wipFiber, elements) {
   let index = 0
   let prevSibling = null
   let oldFiber = wipFiber.alternate && wipFiber.alternate.child
