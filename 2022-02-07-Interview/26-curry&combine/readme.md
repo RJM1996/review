@@ -1,4 +1,4 @@
-## 柯里化与组合(curry&combine)
+## 柯里化与组合(curry&compose)
 
 ### 柯里化
 

@@ -1,0 +1,15 @@
+{
+  "name": "2022-03-07-ts",
+  "version": "1.0.0",
+  "description": "test ts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ext .ts"
+  },
+  "author": "rjm",
+  "license": "ISC",
+  "devDependencies": {
+    "tslint": "^6.1.3"
+  }
+}
