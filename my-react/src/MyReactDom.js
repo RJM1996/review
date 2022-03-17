@@ -4,7 +4,11 @@ import { EFFECT_TAG, ELEMENT_TYPE } from './types.js'
  * MyReactDom
  */
 export default class MyReactDom {
-  constructor() { }
+  /**
+   * react dom render
+   * @param {*} element 
+   * @param {*} container 
+   */
   static render (element, container) {
     wipRoot = {
       dom: container,
@@ -242,6 +246,7 @@ export const useState = function (initValue) {
     hook.state = action(hook.state)
   })
   const setState = function (action) {
+    debugger
     hook.queue.push(action)
     wipRoot = {
       dom: currentRoot.dom,

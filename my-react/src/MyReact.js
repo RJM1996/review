@@ -4,7 +4,7 @@ import { ELEMENT_TYPE } from './types.js'
  * MyReact: 实现自己的 react
  */
 export default class MyReact {
-  // 1. 实现 createElement 函数
+  // 实现 createElement 函数
   static createElement(type, props, ...children) {
     return {
       type,
