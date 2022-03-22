@@ -34,7 +34,7 @@ CSS2.1 中规定满足下列 CSS 声明之一的元素会生成 BFC：
 
 3、自适应两三栏布局：因为 BFC 的区域不会与 float 的元素区域重叠
 
-<img src="/Users/rongjunming/Documents/00-demo/github/review/2022-02-07-Interview/27-BFC/readme.assets/image-20220322203813292.png" alt="image-20220322203813292" style="zoom:50%;" />
+<img src="./readme.assets/image-20220322203813292.png" alt="image-20220322203813292" style="zoom:50%;" />
 
 ### 总结
 
