@@ -4,7 +4,7 @@
 给你一颗二叉树, 然后从左边照过来一束光, 返回所有能被光照到的节点
 例如：
 
-<img src="/Users/rongjunming/Documents/00-demo/github/review/2022-03-13-Algorithm/LeetCode/02-二叉树的层序遍历/readme.assets/image-20220319001801635.png" alt="image-20220319001801635" style="zoom: 33%;" />
+<img src="readme.assets/image-20220319001801635.png" alt="image-20220319001801635" style="zoom: 33%;" />
 
 上述二叉树，从左侧看，可以看到的节点为 [1,2,4,7]
 
