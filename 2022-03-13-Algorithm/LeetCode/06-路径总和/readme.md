@@ -11,7 +11,7 @@
 
 例如：target = 22，则下面二叉树蓝色节点组成的路径之和满足条件
 
-<img src="/Users/rongjunming/Documents/00-demo/github/review/2022-03-13-Algorithm/LeetCode/06-路径总和/readme.assets/image-20220322205433747.png" alt="image-20220322205433747" style="zoom:50%;" />
+<img src="readme.assets/image-20220322205433747.png" alt="image-20220322205433747" style="zoom:50%;" />
 
 ### 题目分析和代码
 

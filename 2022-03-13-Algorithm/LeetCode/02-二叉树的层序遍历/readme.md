@@ -73,7 +73,7 @@ var levelOrder = function (root) {
 
 ### 执行结果和复杂度分析
 
-<img src="/Users/rongjunming/Documents/00-demo/github/review/2022-03-13-Algorithm/LeetCode/02-二叉树的层序遍历/readme.assets/image-20220319003432239.png" alt="image-20220319003432239" style="zoom:50%;" />
+<img src="readme.assets/image-20220319003432239.png" alt="image-20220319003432239" style="zoom:50%;" />
 
 
 

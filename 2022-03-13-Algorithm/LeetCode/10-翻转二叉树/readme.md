@@ -9,7 +9,7 @@
 
 示例 1：
 
-<img src="/Users/rongjunming/Documents/00-demo/github/review/2022-03-13-Algorithm/LeetCode/10-翻转二叉树/readme.assets/image-20220324212557319.png" alt="image-20220324212557319" style="zoom:67%;" />
+<img src="readme.assets/image-20220324212557319.png" alt="image-20220324212557319" style="zoom:67%;" />
 
 输入：root = [4,2,7,1,3,6,9]
 输出：[4,7,2,9,6,3,1]

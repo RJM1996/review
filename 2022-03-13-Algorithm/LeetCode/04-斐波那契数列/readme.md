@@ -103,7 +103,7 @@ var fib = function (n) {
 
 其实斐波那契数列的计算可以推导出一个通项公式，直接使用公式计算即可
 
-<img src="/Users/rongjunming/Documents/00-demo/github/review/2022-03-13-Algorithm/LeetCode/04-斐波那契数列/readme.assets/image-20220320145607142.png" alt="image-20220320145607142" style="zoom:50%;" />
+<img src="readme.assets/image-20220320145607142.png" alt="image-20220320145607142" style="zoom:50%;" />
 
 ```js
 

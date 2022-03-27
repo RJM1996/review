@@ -42,7 +42,7 @@
 
 画图理解：
 
-<img src="/Users/rongjunming/Documents/00-demo/github/review/2022-03-13-Algorithm/LeetCode/03-两数相加/readme.assets/image-20220320002220825.png" alt="image-20220320002220825" style="zoom:50%;" />
+<img src="readme.assets/image-20220320002220825.png" alt="image-20220320002220825" style="zoom:50%;" />
 
 
 

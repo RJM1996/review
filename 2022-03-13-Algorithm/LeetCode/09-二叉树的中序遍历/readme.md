@@ -10,7 +10,7 @@ LeetCode 链接: https://leetcode-cn.com/problems/binary-tree-inorder-traversal/
 
 例如：
 
-<img src="/Users/rongjunming/Documents/00-demo/github/review/2022-03-13-Algorithm/LeetCode/09-二叉树的中序遍历/readme.assets/image-20220323212421894.png" alt="image-20220323212421894" style="zoom:67%;" />
+<img src="readme.assets/image-20220323212421894.png" alt="image-20220323212421894" style="zoom:67%;" />
 
 这棵二叉树的中序遍历结果为 [4, 2, 5, 1, 6, 3]
 
