@@ -1,0 +1,13 @@
+{
+  "name": "range-list",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "rjm",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
