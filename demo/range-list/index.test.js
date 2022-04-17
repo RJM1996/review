@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const RangeList = require('./index.js');
 
 test('test RangeList add', () => {

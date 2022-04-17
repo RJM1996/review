@@ -5,29 +5,22 @@
 /** *
  * NOTE: Feel free to add any extra member variables/functions you like.
  */
+
+
 class RangeList {
   constructor() {
     this.list = [];
-  }
-  // judge the range is valid
-  isValidRange (range) {
-    return range.end > range.begin
-  }
-  // judge the range is include the range
-  isInclude (target, source) {
-    return target.begin >= source.begin && target.end <= source.end
   }
   /**
    * Adds a range to the list
    * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
    */
   add (range) {
-    // TODO: implement this
     const newRange = {
       begin: range[0],
       end: range[1]
     }
-    if (!this.isValidRange(newRange)) return
+    if (!isValidRange(newRange)) return
 
     this.list.push(newRange);
 
@@ -36,16 +29,16 @@ class RangeList {
     if (len > 1) {
       const res = []
       this.list.sort((a, b) => a.begin - b.begin)
-      // 取第一个区间为 tmp
+      // Take the first interval as tmp
       let tmp = this.list[0]
-      // 从第二个区间开始遍历
+      // Traverse from the second interval
       for (let i = 1; i < len; i++) {
         const cur = this.list[i]
-        // 判断 cur 和 tmp 是否重叠
+        // Judge whether cur and tmp overlap
         if (tmp.end >= cur.begin) {
           tmp.end = Math.max(cur.end, tmp.end)
         } else {
-          // 如果没有重叠说明 tmp 不能再合并了， 则把 tmp 加入结果
+          // If there is no overlap, it indicates that tmp cannot be merged again, then add tmp to the result
           res.push(tmp)
           tmp = cur
         }
@@ -59,24 +52,23 @@ class RangeList {
    * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
    */
   remove (range) {
-    // TODO: implement this
-
     const newRange = {
       begin: range[0],
       end: range[1]
     }
-    if (!this.isValidRange(newRange)) return
+    if (!isValidRange(newRange)) return
 
     const res = []
     for (let i = 0; i < this.list.length; i++) {
       const curRange = this.list[i]
+      // No overlap
       if (curRange.end < newRange.begin) {
-        // 没有重叠
         res.push(curRange)
-      } else {
-        // 有重叠
-        // 1. new 完全包含于 cur
-        if (newRange.begin >= curRange.begin && newRange.end <= curRange.end) {
+      }
+      // overlap
+      else {
+        // 1. newRange is completely included in curRange
+        if (isInclude(newRange, curRange)) {
           const range1 = {
             begin: curRange.begin,
             end: newRange.begin
@@ -85,16 +77,15 @@ class RangeList {
             begin: newRange.end,
             end: curRange.end
           }
-          // console.log(111, range1, range2, res)
-          if (this.isValidRange(range1)) {
-            res.push(range1);
+          if (isValidRange(range1)) {
+            res.push(range1)
           }
-          if (this.isValidRange(range2)) {
-            res.push(range2);
+          if (isValidRange(range2)) {
+            res.push(range2)
           }
         }
         else {
-          // 2. begin 在一个区间
+          // 2. newRange.begin is included curRange
           if (newRange.begin > curRange.begin && newRange.begin < curRange.end) {
             const range1 = {
               begin: curRange.begin,
@@ -104,16 +95,14 @@ class RangeList {
               begin: newRange.begin,
               end: curRange.end
             }
-            // console.log('range1', range1)
-            // console.log('range2', range2)
-            if (!this.isInclude(range1, newRange)) {
+            if (!isInclude(range1, newRange)) {
               res.push(range1)
             }
-            if (!this.isInclude(range2, newRange)) {
+            if (!isInclude(range2, newRange)) {
               res.push(range2)
             }
           }
-          // 3. end 在另一个区间
+          // 3. newRange.end is included curRange
           if (newRange.end > curRange.begin && newRange.end < curRange.end) {
             const range1 = {
               begin: curRange.begin,
@@ -123,10 +112,10 @@ class RangeList {
               begin: newRange.end,
               end: curRange.end
             }
-            if (!this.isInclude(range1, newRange)) {
+            if (!isInclude(range1, newRange)) {
               res.push(range1)
             }
-            if (!this.isInclude(range2, newRange)) {
+            if (!isInclude(range2, newRange)) {
               res.push(range2)
             }
           }
@@ -139,13 +128,21 @@ class RangeList {
    * Prints out the list of ranges in the range list
    */
   print () {
-    // TODO: implement this
     const res = this.list.map(item => {
       return `[${item.begin}, ${item.end})`
     }).join(' ')
     console.log(res)
     return res
   }
+}
+
+// judge the range is valid
+function isValidRange (range) {
+  return range.end > range.begin
+}
+// judge the range is include the range
+function isInclude (target, source) {
+  return target.begin >= source.begin && target.end <= source.end
 }
 
 module.exports = RangeList
