@@ -125,3 +125,55 @@ var buildTree = function (inorder, postorder) {
   return treeRoot(0, len - 1, 0, len - 1)
 }
 ```
+
+### 根据前序和后序遍历构造二叉树
+
+思路和前面一样:
+1. 根节点为前序遍历序列的第一个元素，后序的最后一个元素
+2. 找到前序的第二个元素在后序序列中的位置，即可确定左子树节点的个数
+3. 然后就能将序列一分为二，即可递归处理左右子树了
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @param {number[]} postorder
+ * @return {TreeNode}
+ */
+var constructFromPrePost = function (preorder, postorder) {
+  // 1. 同样使用 map 存储节点在后序遍历序列中的索引
+  const len = postorder.length
+  const map = new Map()
+  for (let i = 0; i < len; i++) {
+    map.set(postorder[i], i)
+  }
+  const treeRoot = (preL, preR, postL, postR) => {
+    if (preL > preR || postL > postR) return null
+
+    // 找到根节点的值，构造根节点
+    const rootVal = preorder[preL]
+    const root = new TreeNode(rootVal)
+    if (preL === preR) return root
+    
+    // 找到左子树根节点在后序序列中的下标
+    const leftRootIndex = map.get(preorder[preL + 1])
+    // 计算左子树的节点个数
+    const leftNodeNum = leftRootIndex - postL + 1
+
+    // 递归处理左右子树
+    root.left = treeRoot(preL + 1, preL + leftNodeNum, postL, postL + leftNodeNum - 1)
+    root.right = treeRoot(preL + leftNodeNum + 1, preR, postL + leftNodeNum, postR)
+
+    return root
+  }
+
+  return treeRoot(0, len - 1, 0, len - 1)
+};
+```
