@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <style>
+    /* 单行截断 */
+    .box {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 200px;
+      border: 1px solid red;
+      display: block;
+    }
+
+    /* 多行截断 */
+    .box1 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      width: 200px;
+      border: 1px solid red;
+    }
+
+  </style>
+
+  <div>
+    <span class="box">
+      一段超长的文本一段超长的文本一段超长的文本一段超长的文本一段超长的文本一段超长的文本
+    </span>
+
+    <div class="box1">
+      一段超长的文本一段超长的文本一段超长的文本一段超长的文本一段超长的文本一段超长的文本
+    </div>
+  </div>
+</body>
+
+</html>
