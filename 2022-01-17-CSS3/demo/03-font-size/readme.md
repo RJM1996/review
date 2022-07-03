@@ -10,6 +10,19 @@
 
 3. font-weight 取值一般为: normal, bold
 lighter, bolder, 100-900 一般取决于字体和浏览器的支持, 通常并不使用
+```
+100 - Thin
+200 - Extra Light (Ultra Light)
+300 - Light
+400 - Regular (Normal、Book、Roman)
+500 - Medium
+600 - Semi Bold (Demi Bold)
+700 - Bold
+800 - Extra Bold (Ultra Bold)
+900 - Black (Heavy)
+```
+
+
 
 4. color 的表示
 - 颜色名

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>分隔手机号</title>
+</head>
+
+<body>
+  <div>
+    <input id="phone" style="width: 80%; height: 32px;" type="text" maxlength="13" placeholder="请输入手机号">
+  </div>
+
+  <script>
+    var phone = document.getElementById('phone');
+    phone.addEventListener('input', function (e) {
+      let val = e.target.value;
+      // var reg = /^1[3456789]\d{9}$/;
+      // if (reg.test(value)) {
+      //   var first = value.substr(0, 3);
+      //   var second = value.substr(3, 4);
+      //   var third = value.substr(7, 4);
+      //   e.target.value = first + ' ' + second + ' ' + third;
+      // }
+
+      // 分段显示手机号 3-4-4
+      if (val.length === 3 || val.length === 8) {
+        val += ' '
+      } else if (val.length === 9 || val.length === 4) {
+        val = val.trim()
+      }
+      val = val.replace(/(\d{3})(\d{4})(\d{4})/, '$1 $2 $3')
+      e.target.value = val
+
+    });
+
+    // keydown
+    phone.addEventListener('keydown', function (e) {
+      let val = e.target.value;
+      console.log(e.keyCode)
+      if (e.keyCode === 8) {
+        console.log(val, val.length)
+        if (val.length === 4 || val.length === 10) {
+          console.log(111, val)
+          val = val.slice(0, val.length - 1)
+          console.log(222, val)
+        }
+        // val = val.replace(/(\d{3})(\d{4})(\d{4})/, '$1 $2 $3')
+        e.target.value = val
+      }
+    });
+
+  </script>
+</body>
+
+</html>
