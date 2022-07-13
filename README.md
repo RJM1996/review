@@ -17,7 +17,6 @@
 #### [fe-deployment](./fe-deployment)
 #### [my-react](./my-react)
 #### [other-files](./other-files)
-#### [test1.md](./test1.md)
 #### [tree.js](./tree.js)
 
 
@@ -80,6 +79,8 @@
 #### [27-BFC](./2022-02-07-Interview/27-BFC)
 #### [28-media](./2022-02-07-Interview/28-media)
 #### [29-deepClone](./2022-02-07-Interview/29-deepClone)
+#### [30-httpCache](./2022-02-07-Interview/30-httpCache)
+#### [31-call-bind-apply](./2022-02-07-Interview/31-call-bind-apply)
 
 
 ### ./2022-02-16-Vue/
@@ -131,6 +132,7 @@
 #### [demo06.js](./demo/demo06.js)
 #### [demo07.js](./demo/demo07.js)
 #### [index.html](./demo/index.html)
+#### [phone-split](./demo/phone-split)
 #### [range-list](./demo/range-list)
 #### [test.html](./demo/test.html)
 #### [test01.js](./demo/test01.js)
