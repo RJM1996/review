@@ -22,13 +22,16 @@ function call() {
     name: 'tom',
   }
 
-  const res = say(12)
-  const res1 = say.myCall(tom, 13)
-  const res2 = say.call(tom)
-  console.log('res', res)
-  console.log('res1', res1)
-  console.log('res2', res2)
+  const res = say(12) // global, undefined, 12
+  const res1 = say.myCall(tom, 13) // tom, tom, 13
+  const res2 = say.call(tom, 13)
+  console.log({
+    res,
+    res1,
+    res2,
+  })
 }
+// call()
 
 // 实现 Promise.all()
 function promiseAll() {
@@ -50,20 +53,20 @@ function promiseAll() {
     }, 3000)
   })
 
-  // const p4 = new Promise((resolve, reject) => {
-  //   setTimeout(() => {
-  //     reject('p4 delay 4000ms')
-  //   }, 4000)
-  // })
+  const p4 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject('p4 delay 4000ms')
+    }, 4000)
+  })
 
-  const pool = [p1, p2, p3]
+  const pool = [p1, p2, p3, p4]
 
   Promise.all(pool)
     .then((res) => {
       console.log('all', res)
     })
     .catch((err) => {
-      console.log(err)
+      console.log('all reject', err)
     })
 
   Promise.race(pool)
@@ -103,7 +106,7 @@ function promiseAll() {
       console.log('myAll', res)
     })
     .catch((err) => {
-      console.log(err)
+      console.log('myAll reject', err)
     })
 
   Promise.myRace = function (promises = []) {
