@@ -7,8 +7,11 @@ const data = {
   ok: true,
 }
 let activeEffect = null
+// 新增一个副作用函数栈
+const effectStack = []
+
 // 副作用函数注册器
-function effectRegister(fn) {
+function effectRegister(fn, options = {}) {
   function cleanup(effectFn) {
     for (let i = 0; i < effectFn.deps.length; i++) {
       const deps = effectFn.deps[i]
@@ -19,8 +22,12 @@ function effectRegister(fn) {
   function effectFn() {
     cleanup(effectFn)
     activeEffect = effectFn
+    effectStack.push(effectFn)
     fn()
+    effectStack.pop()
+    activeEffect = effectStack[effectStack.length - 1]
   }
+  effectFn.options = options
   // 存储包含该副作用函数的依赖集合
   effectFn.deps = []
   effectFn()
@@ -47,7 +54,19 @@ function trigger(target, key) {
     // 获取与该 key 相关联的副作用函数并执行
     const effects = depsMap.get(key)
     const effectsToRun = new Set(effects)
-    effectsToRun.forEach((fn) => fn())
+    effects &&
+      effects.forEach((effect) => {
+        if (activeEffect !== effect) {
+          effectsToRun.add(effect)
+        }
+      })
+    effectsToRun.forEach((fn) => {
+      if (fn.options && fn.options.scheduler) {
+        fn.options.scheduler(fn)
+      } else {
+        fn()
+      }
+    })
   }
 }
 
@@ -93,4 +112,51 @@ btnEle.addEventListener('click', () => {
 
 btnChangeEle.addEventListener('click', () => {
   proxyData.text = 'hello Vue3'
+  console.log({ temp1, temp2 })
+  proxyData.count++
 })
+
+let temp1, temp2
+effectRegister(function effectFn1() {
+  console.log('effectFn1')
+  effectRegister(() => {
+    console.log('effectFn2')
+    temp2 = proxyData.count
+  })
+  temp1 = proxyData.text
+})
+
+
+const jobQueue = new Set()
+const promise = Promise.resolve()
+let isFlushing = false
+
+
+effectRegister(
+  () => {
+    console.log(proxyData.count)
+  },
+  // options
+  {
+    scheduler(fn) {
+      // setTimeout(fn)
+      // fn()
+      jobQueue.add(fn)
+      flushJob()
+    },
+  }
+)
+proxyData.count++
+proxyData.count++
+console.log('done')
+
+function flushJob() {
+  if (isFlushing) return
+
+  isFlushing = true
+  promise.then(() => {
+    jobQueue.forEach((fn) => fn())
+  }).finally(() => {
+    isFlushing = false
+  })
+}
