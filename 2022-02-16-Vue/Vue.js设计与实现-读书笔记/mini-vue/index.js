@@ -5,6 +5,7 @@ const data = {
   text: 'hello world',
   count: 1,
   ok: true,
+  foo: 1,
 }
 let activeEffect = null
 // 新增一个副作用函数栈
@@ -23,14 +24,18 @@ function effectRegister(fn, options = {}) {
     cleanup(effectFn)
     activeEffect = effectFn
     effectStack.push(effectFn)
-    fn()
+    const res = fn()
     effectStack.pop()
     activeEffect = effectStack[effectStack.length - 1]
+    return res
   }
   effectFn.options = options
   // 存储包含该副作用函数的依赖集合
   effectFn.deps = []
-  effectFn()
+  if (!options.lazy) {
+    effectFn()
+  }
+  return effectFn
 }
 // 定义代理对象
 const proxyData = new Proxy(data, {
@@ -126,11 +131,9 @@ effectRegister(function effectFn1() {
   temp1 = proxyData.text
 })
 
-
 const jobQueue = new Set()
 const promise = Promise.resolve()
 let isFlushing = false
-
 
 effectRegister(
   () => {
@@ -154,9 +157,80 @@ function flushJob() {
   if (isFlushing) return
 
   isFlushing = true
-  promise.then(() => {
-    jobQueue.forEach((fn) => fn())
-  }).finally(() => {
-    isFlushing = false
+  promise
+    .then(() => {
+      jobQueue.forEach((fn) => fn())
+    })
+    .finally(() => {
+      isFlushing = false
+    })
+}
+
+// 计算属性的实现
+function computed(getter) {
+  let cachedValue = null
+  let dirty = true
+  // 注册副作用函数, 生成一个 lazy 的 effectFn
+  const effectFn = effectRegister(getter, {
+    lazy: true,
+    scheduler() {
+      if (!dirty) {
+        dirty = true
+        trigger(res, 'value')
+      }
+    },
   })
+  const res = {
+    get value() {
+      // 当读取 value 时才执行 effectFn
+      if (dirty) {
+        cachedValue = effectFn()
+        dirty = false
+      }
+      track(res, 'value')
+      return cachedValue
+    },
+  }
+  return res
+}
+
+const sumRes = computed(() => {
+  console.log('computed run')
+  if (proxyData.ok) {
+    return proxyData.text
+  }
+  return 'no ok'
+})
+console.log({ sumRes: sumRes.value })
+console.log({ sumRes: sumRes.value })
+
+effectRegister(() => {
+  console.log(111, { sumRes: sumRes.value })
+})
+
+proxyData.ok = false
+
+console.log({ sumRes: sumRes.value })
+
+// watch 的实现
+function watch(source, cb) {
+  effectRegister(() => traverse(source), {
+    scheduler() {
+      cb()
+    },
+  })
+}
+watch(proxyData, () => {
+  console.log('数据变化了', proxyData)
+})
+proxyData.foo++
+proxyData.count++
+
+function traverse(source, seen = new Set()) {
+  if (typeof source !== 'object' || source === null || seen.has(source)) return
+  seen.add(source)
+  for (let key in source) {
+    traverse(source[key], seen)
+  }
+  return source
 }
