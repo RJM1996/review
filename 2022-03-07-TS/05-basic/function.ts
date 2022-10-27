@@ -20,9 +20,9 @@ function add(x: any, y: any): any {
 
 console.log({ add: add(1, 2) })
 
-let str: any = "to be or not to be";
-let strLength: number = str.length;
-let strLength1: number = (str as string).length;
+const str: any = "to be or not to be";
+const strLength: number = str.length;
+const strLength1: number = (str as string).length;
 console.log({
   strLength1: strLength1,
   strLength: strLength

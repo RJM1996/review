@@ -104,3 +104,9 @@ class C {
 }
 
 type D = InstanceType<typeof C>;  // C
+
+// 13. Record
+type keys = 'abc' | 'def'
+interface DataType extends Record<keys, string> {
+  id: number;
+}
