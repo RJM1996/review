@@ -17,6 +17,7 @@
 #### [fe-deployment](./fe-deployment)
 #### [my-react](./my-react)
 #### [other-files](./other-files)
+#### [pattern](./pattern)
 #### [tree.js](./tree.js)
 
 
@@ -85,6 +86,7 @@
 
 ### ./2022-02-16-Vue/
 #### [Vue.js设计与实现-读书笔记](./2022-02-16-Vue/Vue.js设计与实现-读书笔记)
+#### [demo](./2022-02-16-Vue/demo)
 #### [vue-01.pdf](./2022-02-16-Vue/vue-01.pdf)
 #### [vue-02.pdf](./2022-02-16-Vue/vue-02.pdf)
 #### [vue-03.pdf](./2022-02-16-Vue/vue-03.pdf)
@@ -110,6 +112,7 @@
 
 ### ./2022-03-13-Algorithm/
 #### [LeetCode](./2022-03-13-Algorithm/LeetCode)
+#### [demo](./2022-03-13-Algorithm/demo)
 #### [vdom-diff](./2022-03-13-Algorithm/vdom-diff)
 #### [排序汇总.md](./2022-03-13-Algorithm/排序汇总.md)
 #### [算法思想.md](./2022-03-13-Algorithm/算法思想.md)
@@ -174,5 +177,9 @@
 #### [职业决策表1.png](./other-files/职业决策表1.png)
 #### [职业决策表2.png](./other-files/职业决策表2.png)
 #### [面试问题相关技巧.jpg](./other-files/面试问题相关技巧.jpg)
+
+
+### ./pattern/
+#### [常用正则记录.md](./pattern/常用正则记录.md)
 
 
