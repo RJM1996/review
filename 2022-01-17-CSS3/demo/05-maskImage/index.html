@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .video {
+      width: 668px;
+      height: 376px;
+      position: relative;
+      /* 用一个遮罩把弹幕挡住,从而实现弹幕不挡人脸 */
+      -webkit-mask-image: url("./mask.svg");
+      -webkit-mask-size: 668px 376px;
+      background: lightblue;
+    }
+
+    .bullet {
+      position: absolute;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="video">
+    <div class="bullet" style="left: 100px; top: 20px;">元芳，你怎么看</div>
+    <div class="bullet" style="left: 120px; top: 40px;">法外狂徒张三!!!</div>
+    <div class="bullet" style="left: 200px; top: 80px;">你好，我是张三</div>
+    <div class="bullet" style="left: 100px; top: 120px;">张三要是把人瞪死就不是张三了，是张飞</div>
+  </div>
+</body>
+
+</html>
